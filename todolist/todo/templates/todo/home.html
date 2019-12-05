@@ -1,0 +1,46 @@
+{%extends 'todo/base.html' %}
+{%block content%}
+  {%if messages%}
+    {%for message in messages%}
+      <div class="alert alert-success" role="alert">
+        <button class="close" data-dismiss="alert">
+          <small><sup>x</sup></small>
+        </button>
+        {{message}}
+      </div>
+    {%endfor%}
+  {%endif%}
+
+  {%if all_items%}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <td class='text-light bg-dark'><center><strong>To-Do</strong></center></td>
+          <td class="text-light bg-dark w150"><center><strong>Done?</strong></center></td>
+          <td class="text-light bg-dark w150"><center><strong>Delete?</strong></center></td>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        {%for things in all_items%}
+          {%if things.completed%}
+
+            <tr class="table table-secondary">
+              <td class="striker">{{things.item}}</td>
+              <td class="w150"><center><a href="{%url 'uncross' things.id%}"><i class="fas fa-eye"></i></a></center></td>
+              <td class="w150"><center><a href="{%url 'delete' things.id%}"><i class="fas fa-trash-alt"></i></a></center></td>
+            </tr>
+          {%else%}
+            <tr>
+              <td ><a href="{%url 'edit' things.id%}">{{things.item}}</a></td>
+              <td class="w150"><center><a href="{%url 'cross' things.id%}"><i class="fas fa-eye-slash"></i></a></center></td>
+              <td class="w150"><center><a href="{%url 'delete' things.id%}"><i class="fas fa-trash-alt"></i></a></center></td>
+            </tr>
+          {%endif%}
+        {%endfor%}
+      </tbody>
+
+    </table>
+  {%endif%}
+{%endblock content%}
